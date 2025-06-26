@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax & Margin Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .calculator-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .result {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 15px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .result.margin-result {
+            background: linear-gradient(135deg, #FF6B6B, #ee5a24);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .arrow {
+            text-align: center;
+            font-size: 2rem;
+            color: #667eea;
+            margin: 20px 0;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .example {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #666;
+            border-left: 4px solid #667eea;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💰 Tax & Margin Calculator</h1>
+        
+        <!-- Tax Calculator Section -->
+        <div class="calculator-section">
+            <div class="section-title">📊 Step 1: Calculate Price After Tax</div>
+            
+            <div class="input-group">
+                <label for="originalPrice">Original Price ($):</label>
+                <input type="number" id="originalPrice" placeholder="Enter original price (e.g., 10)" step="0.01" min="0">
+            </div>
+
+            <div class="input-group">
+                <label for="taxRate">Tax Rate (%):</label>
+                <input type="number" id="taxRate" placeholder="Enter tax percentage (e.g., 10)" step="0.01" min="0">
+            </div>
+
+            <div class="result" id="taxResult">
+                Enter values above to see price after tax
+            </div>
+
+            <div class="example">
+                <strong>Example:</strong> Original Price: $10, Tax Rate: 10% → Tax Amount: $1.00 → Price After Tax: $11.00
+            </div>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <!-- Margin Calculator Section -->
+        <div class="calculator-section">
+            <div class="section-title">🎯 Step 2: Calculate Selling Price with Margin</div>
+            
+            <div class="input-group">
+                <label for="afterTaxPrice">Price After Tax ($):</label>
+                <input type="number" id="afterTaxPrice" placeholder="Enter price after tax (e.g., 11)" step="0.01" min="0">
+            </div>
+
+            <div class="input-group">
+                <label for="marginRate">Margin Rate (%):</label>
+                <input type="number" id="marginRate" placeholder="Enter margin percentage (e.g., 50)" step="0.01" min="0">
+            </div>
+
+            <div class="result margin-result" id="marginResult">
+                Enter values above to see selling price
+            </div>
+
+            <div class="example">
+                <strong>Example:</strong> After Tax Price: $11, Margin: 50% → Margin Amount: $5.50 → Selling Price: $16.50
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tax calculation function
+        function calculateTax() {
+            const originalPrice = parseFloat(document.getElementById('originalPrice').value) || 0;
+            const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
+            
+            if (originalPrice > 0 && taxRate >= 0) {
+                const taxAmount = originalPrice * (taxRate / 100);
+                const priceAfterTax = originalPrice + taxAmount;
+                
+                document.getElementById('taxResult').innerHTML = `
+                    Tax Amount: $${taxAmount.toFixed(2)}<br>
+                    <strong>Price After Tax: $${priceAfterTax.toFixed(2)}</strong>
+                `;
+                
+                // Auto-fill the after tax price in step 2
+                document.getElementById('afterTaxPrice').value = priceAfterTax.toFixed(2);
+                calculateMargin(); // Recalculate margin if margin rate is already entered
+            } else {
+                document.getElementById('taxResult').textContent = 'Enter values above to see price after tax';
+            }
+        }
+
+        // Margin calculation function
+        function calculateMargin() {
+            const afterTaxPrice = parseFloat(document.getElementById('afterTaxPrice').value) || 0;
+            const marginRate = parseFloat(document.getElementById('marginRate').value) || 0;
+            
+            if (afterTaxPrice > 0 && marginRate >= 0) {
+                const marginAmount = afterTaxPrice * (marginRate / 100);
+                const sellingPrice = afterTaxPrice + marginAmount;
+                
+                document.getElementById('marginResult').innerHTML = `
+                    Margin Amount: $${marginAmount.toFixed(2)}<br>
+                    <strong>Selling Price: $${sellingPrice.toFixed(2)}</strong>
+                `;
+            } else {
+                document.getElementById('marginResult').textContent = 'Enter values above to see selling price';
+            }
+        }
+
+        // Event listeners for real-time calculation
+        document.getElementById('originalPrice').addEventListener('input', calculateTax);
+        document.getElementById('taxRate').addEventListener('input', calculateTax);
+        document.getElementById('afterTaxPrice').addEventListener('input', calculateMargin);
+        document.getElementById('marginRate').addEventListener('input', calculateMargin);
+
+        // Allow manual override of after tax price
+        document.getElementById('afterTaxPrice').addEventListener('input', function() {
+            calculateMargin();
+        });
+    </script>
+</body>
+</html>
